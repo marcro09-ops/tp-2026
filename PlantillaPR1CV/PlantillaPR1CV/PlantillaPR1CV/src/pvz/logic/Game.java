@@ -64,20 +64,21 @@ public class Game implements GameStatus, GameWorld, GameModel {
         this.reset();
     }
 
-    @Override
-    public void update() {
-    	this.alreadyCatch = false;
-        executePendingActions();
-        this.sunsManager.update();    // 1º Soles del cielo
-        this.zombiesManager.update(); // 2º Zombis
-        this.objects.update();
-        boolean deadRemoved = true;
-        while (deadRemoved || arePendingActionsLeft()) {
-            deadRemoved = this.objects.removeDead();
-            executePendingActions();
-        }
-        this.cycles++;
-    }
+	@Override
+	public void update() {
+	    this.alreadyCatch = false;
+	    executePendingActions();
+	    this.zombiesManager.update();           // 1º sorteo de zombi (fila, tipo, probabilidad)
+	    this.sunsManager.update();              // 2º sol del cielo
+	    this.objects.update();                  // 3º objetos (los girasoles generan soles)
+	    this.zombiesManager.addPendingZombie(); // 4º el zombi nuevo entra al tablero
+	    boolean deadRemoved = true;
+	    while (deadRemoved || arePendingActionsLeft()) {
+	        deadRemoved = this.objects.removeDead();
+	        executePendingActions();
+	    }
+	    this.cycles++;
+	}
 
     @Override
     public void quit() {

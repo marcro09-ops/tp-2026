@@ -22,18 +22,15 @@ public class SunsManager {
     }
 
     public void update() {
-    	boolean spawn = rand.nextBoolean();
-        
         if (game.getCycles() % SUN_GENERATION_CYCLES == 0 && game.getCycles()!=0) {
-            if (spawn) {
             	spawnRandomSun();
-            }
         }
     }
     
     public void spawnRandomSun() {
+    	int row = rand.nextInt(GameWorld.NUM_ROWS);
     	int col = rand.nextInt(GameWorld.NUM_COLS);
-        int row = rand.nextInt(GameWorld.NUM_ROWS);
+        
         Position randomPos = new Position(col, row);
         game.forceAddGameObject(new Sun(game, randomPos));
         game.newGeneratedSun();

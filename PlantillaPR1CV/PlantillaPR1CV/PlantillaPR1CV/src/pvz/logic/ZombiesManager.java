@@ -19,6 +19,7 @@ public class ZombiesManager {
     private int remainingZombies;
     private GameObjectContainer objects;
     private int zombiesAlive;
+    private Zombie pendingZombie;
 
     public ZombiesManager(Game game, Level level, Random rand, GameObjectContainer o) {
         this.game = game;
@@ -51,24 +52,32 @@ public class ZombiesManager {
     }
 
     public boolean addZombie() {
-    	// 1. ¿Toca sacar zombi?
-        boolean probabilidad = shouldAddZombie();
+        // Orden de sorteos (importa para reproducir la semilla): fila, tipo, probabilidad
         int row = randomZombieRow();
+        int type = rand.nextInt(ZombieFactory.getAvailableZombies().size());
+        // La probabilidad solo se sortea si aún quedan zombis (cortocircuito del &&)
+        boolean probabilidad = this.remainingZombies > 0 && shouldAddZombie();
         Position zombiePosition = new Position(Game.NUM_COLS, row);
-        // 2. Comprobamos condiciones básicas ANTES de calcular posiciones aleatorias
-        boolean canAdd = this.remainingZombies > 0 && probabilidad && game.isEmpty(zombiePosition);
+
+        // No se comprueba que la casilla esté vacía: el expected apila zombis en la columna 8
+        boolean canAdd = probabilidad;
         if (canAdd) {
-                String[] tipos = {"z", "bz", "sz", "ez"};
-                String tipoElegido = tipos[rand.nextInt(tipos.length)];
-                Zombie nuevoZombi = ZombieFactory.spawnZombie(tipoElegido, (GameWorld) game, zombiePosition);
-                
-                this.objects.add(nuevoZombi);
-                this.remainingZombies--;
-                this.zombiesAlive++;
+            String[] tipos = {"z", "bz", "sz", "ez"};
+            // Se añadirá al tablero tras actualizar los objetos
+            this.pendingZombie = ZombieFactory.spawnZombie(tipos[type], (GameWorld) game, zombiePosition);
+            this.remainingZombies--;
+            this.zombiesAlive++;
         }
         return canAdd;
     }
 
+    /** Mete en el tablero el zombi generado este ciclo, si lo hay. */
+    public void addPendingZombie() {
+        if (this.pendingZombie != null) {
+            this.objects.add(this.pendingZombie);
+            this.pendingZombie = null;
+        }
+    }
     public void zombieDied() {
         this.zombiesAlive--;
     }
