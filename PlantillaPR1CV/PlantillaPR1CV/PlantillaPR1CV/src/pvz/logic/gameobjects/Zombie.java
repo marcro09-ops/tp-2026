@@ -55,16 +55,27 @@ public abstract class Zombie extends GameObject {
     @Override
     public void update() {
         GameItem item = game.getGameItemInPosition(position.left());
-        
-        if (item == null) {
-            if (cyclesToNextMovement == 1) {
-                move();
-                cyclesToNextMovement = speed;
-            } else {
-                cyclesToNextMovement--;
-            }
+        boolean attackedPlant = false;
+        if (item != null) {
+            attackedPlant = item.receiveZombieAttack(DAMAGE);
+        }
+        if (attackedPlant) {
         } else {
-            item.receiveZombieAttack(DAMAGE);
+            boolean blockedByZombie = (item != null && item.receivePlantAttack(0));
+            if (blockedByZombie) {
+                
+                if (cyclesToNextMovement > 1) {
+                    cyclesToNextMovement--;
+                }
+            } else {
+              
+                if (cyclesToNextMovement == 1) {
+                    move();
+                    cyclesToNextMovement = speed;
+                } else {
+                    cyclesToNextMovement--;
+                }
+            }
         }
     }
 
@@ -89,6 +100,11 @@ public abstract class Zombie extends GameObject {
     @Override
     public boolean catchSun() {
     	return false;
+    }
+    
+    @Override
+    public void kill() {
+    	this.health=0;
     }
     
 }

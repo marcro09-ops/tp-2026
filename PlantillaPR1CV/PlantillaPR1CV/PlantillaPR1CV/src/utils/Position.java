@@ -57,4 +57,9 @@ public class Position {
         result = prime * result + row;
         return result;
     }
+    
+    public boolean isInsideBoard(int numCols, int numRows) {
+        return this.col >= 0 && this.col < numCols && 
+               this.row >= 0 && this.row < numRows;
+    }
 }

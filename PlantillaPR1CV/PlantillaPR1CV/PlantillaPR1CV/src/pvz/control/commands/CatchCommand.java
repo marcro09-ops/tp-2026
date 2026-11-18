@@ -22,15 +22,20 @@ public class CatchCommand extends Command{
 	    @Override
 	    public void execute(GameModel game, GameView view) {
 	        Position pos = new Position(this.col, this.row);
-	        if (!game.canCatchSun(pos)) {
+	        GameObject sun=game.canCatchSun(pos);
+	        if (sun==null) {
 	            view.showError(String.format(Messages.NO_CATCHABLE_IN_POSITION, col, row));
 	            return; 
 	        }
-	       GameObject o= game.getGameItemInPosition(pos);
+	        
+	       
+	       
            game.setAlreadyCatch(true);
-           game.eliminateSun(pos);
+           game.removeDeadSun(sun);
            game.newCaughtSun();
+          
           view.showGame();
+          
            
 	    }
 

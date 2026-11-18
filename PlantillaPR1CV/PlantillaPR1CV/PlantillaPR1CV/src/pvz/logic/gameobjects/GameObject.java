@@ -30,6 +30,7 @@ public abstract class GameObject implements GameItem{
 	abstract public void onEnter();
 	abstract public void onExit();
 	abstract public void update();
+	abstract public void kill();
 	
 	 
 	 

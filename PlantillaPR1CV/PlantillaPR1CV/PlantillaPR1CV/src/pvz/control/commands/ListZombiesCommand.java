@@ -22,7 +22,7 @@ public class ListZombiesCommand extends Command {
         for (Zombie zombie : ZombieFactory.getAvailableZombies()) {
             listText.append(zombie.getDescription()).append(Messages.LINE_SEPARATOR);
         }
-        view.showMessage(listText.toString().trim());
+        view.showMessage(listText.toString().trim()+"\n");
     }
 
     @Override

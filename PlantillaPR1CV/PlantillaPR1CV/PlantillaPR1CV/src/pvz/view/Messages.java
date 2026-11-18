@@ -47,7 +47,7 @@ public class Messages {
 			"[a]dd <plant> <col> <row>: add a plant in position (col, row)",
 			"[a]dd[Z]ombie <zombie> <col> <row>: add a zombie in position (col, row)",
 			"[C]heat[P]lant <plant> <col> <row>: add a plant in position (col, row) without consuming suncoins",
-			"[C]atch <col> <row>: catch a sun, if possible, in position (col, row)",
+			"C]atch <col> <row>: catch a sun, if possible, in position (col, row)",
 			"[l]ist: print the list of available plants",
 			"[l]ist[Z]ombies: print the list of available zombies",
 			"[r]eset [<level> <seed>]: start a new game (if level and seed are both provided, they are used to initialize the game)",

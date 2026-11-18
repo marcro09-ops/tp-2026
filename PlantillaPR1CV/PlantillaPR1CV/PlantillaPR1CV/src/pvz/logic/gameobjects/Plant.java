@@ -51,8 +51,9 @@ public abstract class Plant extends GameObject{
      	
      	return false;
      }
-
-	 public void killPlant(){//Metodo para autoeliminar una planta (en principio solo para Cherry-Bomb)
+     
+@Override
+	 public void kill(){//Metodo para autoeliminar una planta (en principio solo para Cherry-Bomb)
 		 this.health = 0;
 	 }
     abstract public int cost();

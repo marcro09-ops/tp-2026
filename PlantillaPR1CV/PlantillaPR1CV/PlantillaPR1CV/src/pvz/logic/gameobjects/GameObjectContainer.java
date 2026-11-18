@@ -4,6 +4,7 @@ import java.util.List;
 
 
 
+
 import utils.Position;
 
 import java.util.ArrayList;
@@ -22,18 +23,21 @@ public class GameObjectContainer {
 	  }
 	 
 	 public String iconInPosition(Position position) {
-	        for (int i = 0; i < gameObjects.size(); i++) {
-	            if (gameObjects.get(i).isInPosition(position)) {
-	                return gameObjects.get(i).getIcon();
-	            }
-	        }
-	        return null;
+		 StringBuilder icons = new StringBuilder();
+		    
+		    for (GameObject obj : gameObjects) { 
+		        if (obj.isInPosition(position)) {
+		            icons.append(obj.getIcon()); 
+		        }
+		    }
+		    
+		    return icons.toString();
 	   }
 	 
 	 public boolean isEmpty(Position position) {
 	        for (int i = 0; i < gameObjects.size(); i++) {
 	            if (gameObjects.get(i).isInPosition(position)) {
-	                return false;
+	                return false;	
 	            }
 	        }
 	        return true; 
@@ -71,6 +75,15 @@ public class GameObjectContainer {
 		return -1;
 	 }
 	 
+	 public GameObject exitsSunInPosition(Position p) {
+		 for (GameObject obj : gameObjects) { 
+		        if (obj.isInPosition(p) && obj.catchSun()) {
+		            return obj;
+		        }
+		    }
+		 return null;
+	 }
+	 
 	 public int size() {
 		 return gameObjects.size();
 	 }
@@ -81,15 +94,5 @@ public class GameObjectContainer {
 		 }
 		 return gameObjects.get(i);
 	 }
-	 public boolean catchObjectInPosition(Position p) {
-	        for (int i = 0; i < gameObjects.size(); i++) {
-	            if (gameObjects.get(i).isInPosition(p)) {
-	                if (gameObjects.get(i).catchSun()) {
-	                    return true;
-	                }
-	            }
-	        }
-	        return false;
-	    }
 	 
 }

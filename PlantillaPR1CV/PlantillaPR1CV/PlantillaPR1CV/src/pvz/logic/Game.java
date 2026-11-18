@@ -1,6 +1,7 @@
 package pvz.logic;
 
 import java.util.ArrayDeque;
+
 import java.util.Deque;
 import java.util.Random;
 
@@ -64,9 +65,9 @@ public class Game implements GameStatus, GameWorld, GameModel {
         this.reset();
     }
 
-	@Override
-	public void update() {
-	    this.alreadyCatch = false;
+    @Override
+    public void update() {
+    	this.alreadyCatch = false;
 	    executePendingActions();
 	    this.zombiesManager.update();           // 1º sorteo de zombi (fila, tipo, probabilidad)
 	    this.sunsManager.update();              // 2º sol del cielo
@@ -78,7 +79,7 @@ public class Game implements GameStatus, GameWorld, GameModel {
 	        executePendingActions();
 	    }
 	    this.cycles++;
-	}
+    }
 
     @Override
     public void quit() {
@@ -118,12 +119,8 @@ public class Game implements GameStatus, GameWorld, GameModel {
 
     @Override
     public String positionToString(Position position) {
-        String icon = this.objects.iconInPosition(position);
-        if(icon != null) {
-        	return icon;
-        }
-        return "";
-     }
+        return this.objects.iconInPosition(position);
+    }
 
     @Override
     public boolean isEmpty(Position p) {
@@ -132,8 +129,7 @@ public class Game implements GameStatus, GameWorld, GameModel {
 
     @Override
     public boolean isInsideBoard(Position p) {
-        return p.getCol() >= 0 && p.getCol() < NUM_COLS && 
-               p.getRow() >= 0 && p.getRow() < NUM_ROWS;
+        return p.isInsideBoard(NUM_COLS, NUM_ROWS);
     }
 
     @Override
@@ -185,26 +181,28 @@ public class Game implements GameStatus, GameWorld, GameModel {
     	return this.caughtSuns;
     }
     
+    @Override 
+    public void removeDeadSun(GameObject sun) {
+    	sun.kill();
+    	objects.removeDead();
+    }
+    
     @Override
     public void createSunFromSunflower() {
     	this.sunsManager.spawnRandomSun();
     }
 
 	@Override 
-	public boolean canCatchSun(Position p) { //Comprueba si en una posicion hay un sol u otro objecto distinto
-		GameItem item= getGameItemInPosition(p);
-		if(item==null || !item.catchSun() || this.alreadyCatch) {
-			return false;
+	public GameObject canCatchSun(Position p) { //Comprueba si en una posicion hay un sol u otro objecto distinto
+		
+		if(objects.exitsSunInPosition(p)== null || this.alreadyCatch) {
+			return null;
 		}
 		else {
-			return true;
+			return objects.exitsSunInPosition(p);
 		}
 		}
 	
-	@Override 
-	public void eliminateSun(Position p) { //Solo se ejecuta después de comprobar que el objeto es un sol
-		objects.removeFromIndex(objects.getIndex(p));
-	}
 	
     
 

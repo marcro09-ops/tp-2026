@@ -47,6 +47,7 @@ public class Sun extends GameObject{
 	
 	@Override
 	public void onExit() {
+		
 		game.generateCoins(GENERATED_SUNS);
 	};
 
@@ -68,9 +69,13 @@ public class Sun extends GameObject{
 	
 	@Override
     public boolean catchSun() {
-		this.remCycles=0;
     	return true;
     }
+	
+	@Override
+	public void kill() {
+		remCycles=0;
+	}
 	
 	
 	

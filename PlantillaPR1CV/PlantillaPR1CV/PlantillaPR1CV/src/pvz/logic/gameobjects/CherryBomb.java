@@ -18,7 +18,7 @@ public class CherryBomb extends Plant {
     public CherryBomb(GameWorld game, Position position) {
         super(game, position, INITIAL_HEALTH);
         
-        this.cyclesToExplode = 2;
+        this.cyclesToExplode = 3;
     }
     
     public CherryBomb() {} // Para la factoría
@@ -45,7 +45,7 @@ public class CherryBomb extends Plant {
 
     @Override
     public String shortName() {
-        // Dinámico: minúscula si falta más de 1 ciclo, mayúscula en el ciclo previo y en la explosión
+        
         if(this.cyclesToExplode<=1) {
         	return Messages.CHERRY_BOMB_SYMBOL.toUpperCase();
         }

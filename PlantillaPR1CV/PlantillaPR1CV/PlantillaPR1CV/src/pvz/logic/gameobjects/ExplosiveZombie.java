@@ -2,6 +2,7 @@ package pvz.logic.gameobjects;
 
 
 import pvz.logic.GameWorld;
+import pvz.logic.actions.ExplosionAction;
 import pvz.view.Messages;
 import utils.Position;
 
@@ -16,7 +17,7 @@ public class ExplosiveZombie extends Zombie {
     @Override
     public void onExit() {
     	super.onExit(); 
-        game.pushAction(new pvz.logic.actions.ExplosionAction(this.position, 3, true));
+        game.pushAction(new ExplosionAction(this.position, 3, true));
     }
    
     @Override

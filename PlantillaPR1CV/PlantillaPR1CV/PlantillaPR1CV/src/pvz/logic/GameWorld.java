@@ -14,9 +14,9 @@ public interface GameWorld {
     void zombieDied();
     GameObject getGameItemInPosition(Position p);
     void createSunFromSunflower();
-    boolean canCatchSun(Position p);
+    GameObject canCatchSun(Position p);
+    void removeDeadSun(GameObject s);
     boolean addGameObject(Plant plantType);
     void forceAddGameObject(GameObject o);
-    void eliminateSun(Position pos);
     void pushAction(pvz.logic.actions.GameAction action);
 }

@@ -20,10 +20,13 @@ public class SunsManager {
         this.rand = rand;
    
     }
-
+    
     public void update() {
-        if (game.getCycles() % SUN_GENERATION_CYCLES == 0 && game.getCycles()!=0) {
-            	spawnRandomSun();
+    	
+        if ((game.getCycles() % SUN_GENERATION_CYCLES) == 0 && game.getCycles()!=0) {
+        	
+        		spawnRandomSun();
+        	
         }
     }
     
